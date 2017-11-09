@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+    import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,9 +53,12 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countManagersAbove(final Employee employee) {
-        /*
-         * Implement this function
-         */
+        int count = 0;
+        if (employee.getManager() == null) {
+            return count;
+        }
+        count++;
+        return countManagersAbove(findManager(employee));
     }
 
     /**
@@ -67,9 +70,23 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countEmployeesUnder(final Employee employee) {
-        /*
-         * Implement this function
-         */
+        int count = 0;
+        int temp = 0;
+        ArrayList<Employee> tempEmployees = new ArrayList<Employee>();
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getManager() == employee.getName()) {
+                temp++;
+                tempEmployees.add(employees.get(i));
+            }
+        }
+        if (temp == 0) {
+            return count;
+        }
+        count += temp;
+        for (int i = 0; i < tempEmployees.size(); i++) {
+            count += countEmployeesUnder(tempEmployees.get(i));
+        }
+        return count;
     }
 
     /**
